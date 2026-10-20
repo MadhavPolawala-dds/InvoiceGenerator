@@ -1,0 +1,54 @@
+services:
+  # 1. Backend API Service (NestJS)
+  - type: web
+    name: invoice-api
+    runtime: node
+    plan: free
+    region: oregon
+    buildCommand: npm install && npm run build -w packages/invoice-core && npm run build -w apps/api && npx prisma migrate deploy --schema=apps/api/prisma/schema.prisma
+    startCommand: npm run start:prod --workspace=@invoice/api
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: invoice-db
+          property: connectionString
+      - key: PORT
+        value: 10000
+      - key: WEB_ORIGIN
+        fromService:
+          type: web
+          name: invoice-web
+          property: host
+      - key: MAIL_DRIVER
+        value: emailjs
+      - key: EMAILJS_SERVICE_ID
+        sync: false
+      - key: EMAILJS_TEMPLATE_ID
+        sync: false
+      - key: EMAILJS_PUBLIC_KEY
+        sync: false
+      - key: EMAILJS_PRIVATE_KEY
+        sync: false
+
+  # 2. Frontend Web Service (Next.js)
+  - type: web
+    name: invoice-web
+    runtime: node
+    plan: free
+    region: oregon
+    buildCommand: npm install && npm run build -w packages/invoice-core && npm run build -w apps/web
+    startCommand: npm run start --workspace=@invoice/web
+    envVars:
+      - key: NEXT_PUBLIC_API_URL
+        fromService:
+          type: web
+          name: invoice-api
+          property: host
+
+databases:
+  # Managed PostgreSQL Database (Free Tier)
+  - name: invoice-db
+    plan: free
+    databaseName: invoices
+    user: user
+    region: oregon

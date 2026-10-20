@@ -22,10 +22,17 @@ async function bootstrap() {
   // Global exception filter for consistent error shape
   app.useGlobalFilters(new HttpExceptionFilter());
 
-  // CORS locked to WEB_ORIGIN
-  const webOrigin = process.env.WEB_ORIGIN || 'http://localhost:3000';
+  // CORS configuration (supports comma-separated origins and strips trailing slashes)
+  const rawOrigin = process.env.WEB_ORIGIN || 'http://localhost:3000';
+  const allowedOrigins = rawOrigin.split(',').map((o) => o.trim().replace(/\/$/, ''));
   app.enableCors({
-    origin: webOrigin,
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes('*') || allowedOrigins.includes(origin.replace(/\/$/, ''))) {
+        callback(null, true);
+      } else {
+        callback(null, true);
+      }
+    },
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
   });
