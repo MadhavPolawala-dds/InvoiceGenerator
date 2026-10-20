@@ -3,7 +3,13 @@
  * The only environment variable allowed in apps/web is NEXT_PUBLIC_API_URL
  */
 
-const rawApiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api';
+let rawApiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api';
+
+// If Render injected internal private cluster hostname (e.g. "invoice-api"), map to public domain
+if (rawApiUrl.includes('invoice-api') && !rawApiUrl.includes('.onrender.com')) {
+  rawApiUrl = rawApiUrl.replace('invoice-api', 'invoice-api-ocbn.onrender.com');
+}
+
 let cleanUrl = rawApiUrl.replace(/\/+$/, '');
 if (!cleanUrl.startsWith('http://') && !cleanUrl.startsWith('https://')) {
   cleanUrl = `https://${cleanUrl}`;

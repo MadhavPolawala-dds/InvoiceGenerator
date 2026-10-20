@@ -15,10 +15,7 @@ services:
       - key: PORT
         value: 10000
       - key: WEB_ORIGIN
-        fromService:
-          type: web
-          name: invoice-web
-          property: host
+        value: https://invoice-web-0xy8.onrender.com
       - key: MAIL_DRIVER
         value: emailjs
       - key: EMAILJS_SERVICE_ID
@@ -40,10 +37,7 @@ services:
     startCommand: npm run start --workspace=@invoice/web
     envVars:
       - key: NEXT_PUBLIC_API_URL
-        fromService:
-          type: web
-          name: invoice-api
-          property: host
+        value: https://invoice-api-ocbn.onrender.com/api
 
 databases:
   # Managed PostgreSQL Database (Free Tier)
