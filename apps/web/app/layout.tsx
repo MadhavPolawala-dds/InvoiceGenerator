@@ -18,9 +18,11 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: 'Liquid Glass Invoice Generator',
-  description: 'Enterprise customizable invoice generator with native liquid glass design system and financial precision.',
+  title: 'Invoice Generator',
+  description: 'Enterprise customizable invoice generator with financial precision and seamless delivery.',
 };
+
+import { Providers } from '@/components/Providers';
 
 export default function RootLayout({
   children,
@@ -28,10 +30,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${plusJakartaSans.variable}`}>
-      <body className="font-sans antialiased text-slate-900 min-h-screen selection:bg-blue-500/20 selection:text-blue-900">
-        <MeshBackground />
-        {children}
+    <html lang="en" className={`${inter.variable} ${plusJakartaSans.variable}`} suppressHydrationWarning>
+      <body suppressHydrationWarning className="font-sans antialiased text-slate-900 min-h-screen selection:bg-blue-500/20 selection:text-blue-900">
+        <Providers>
+          <MeshBackground />
+          {children}
+        </Providers>
       </body>
     </html>
   );

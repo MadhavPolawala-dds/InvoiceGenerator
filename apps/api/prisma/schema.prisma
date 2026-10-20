@@ -1,0 +1,66 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum InvoiceStatus {
+  DRAFT
+  SENT
+}
+
+model Invoice {
+  id              String        @id @default(uuid())
+  number          String        @unique
+  status          InvoiceStatus @default(DRAFT)
+  currency        String        @default("USD")
+  issueDate       DateTime      @db.Date
+  dueDate         DateTime      @db.Date
+  businessName    String
+  businessEmail   String?
+  businessAddress String?
+  customerName    String
+  customerEmail   String?
+  customerAddress String?
+  notes           String?
+  discountCents   Int           @default(0)
+  taxRateBp       Int           @default(0)
+  subtotalCents   Int           @default(0)
+  taxCents        Int           @default(0)
+  totalCents      Int           @default(0)
+  customFields    Json          @default("[]")
+  sentAt          DateTime?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  lineItems       LineItem[]
+
+  @@map("invoices")
+}
+
+model LineItem {
+  id             String   @id @default(uuid())
+  invoiceId      String
+  invoice        Invoice  @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  position       Int
+  description    String
+  quantityMilli  Int
+  unitPriceCents Int
+  lineTotalCents Int
+
+  @@map("line_items")
+}
+
+model EmailLog {
+  id        String   @id @default(uuid())
+  invoiceId String?
+  toEmail   String
+  status    String   // 'SENT' | 'FAILED'
+  error     String?
+  createdAt DateTime @default(now())
+
+  @@map("email_logs")
+}

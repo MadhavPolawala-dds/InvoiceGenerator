@@ -39,7 +39,7 @@ export default function DesignReviewPage() {
             <span>Milestone B1 • Design System & Token Review</span>
           </div>
           <h1 className="text-3xl sm:text-4xl font-extrabold font-heading text-slate-900 tracking-tight">
-            iOS &quot;Liquid Glass&quot; Visual Language
+            Frosted Glass Design System
           </h1>
           <p className="mt-2 text-slate-600 text-sm sm:text-base max-w-2xl leading-relaxed">
             Translucent layered glass, specular highlights, concentric radii, and fluid spring motion designed for financial clarity and WCAG AA accessibility compliance.
@@ -211,7 +211,7 @@ export default function DesignReviewPage() {
             <Dialog
               open={isDialogOpen}
               onOpenChange={setIsDialogOpen}
-              title="Liquid Glass Modal Dialog"
+              title="Frosted Glass Modal Dialog"
               description="Accessible dialog surface with specular reflection and spring animation."
             >
               <div className="space-y-4">

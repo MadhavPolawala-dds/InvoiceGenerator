@@ -2,7 +2,7 @@
   "name": "invoice-generator-monorepo",
   "version": "1.0.0",
   "private": true,
-  "description": "Liquid Glass Invoice Generator Monorepo",
+  "description": "Enterprise Invoice Generator Monorepo",
   "workspaces": [
     "packages/*",
     "apps/*"

@@ -1,0 +1,18 @@
+{
+  "number": "INV-CURL-002",
+  "issueDate": "2026-10-20",
+  "dueDate": "2026-11-20",
+  "businessName": "Curl Studio LLC",
+  "businessEmail": "billing@curlstudio.example.com",
+  "customerName": "Curl Client Inc",
+  "customerEmail": "ap@curlclient.example.com",
+  "discountCents": 1000,
+  "taxRateBp": 1000,
+  "lineItems": [
+    {
+      "description": "Custom API Architecture",
+      "quantityMilli": 2000,
+      "unitPriceCents": 5000
+    }
+  ]
+}

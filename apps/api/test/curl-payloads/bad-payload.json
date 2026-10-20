@@ -1,0 +1,16 @@
+{
+  "number": "",
+  "issueDate": "bad-date",
+  "dueDate": "2026-10-10",
+  "businessName": "",
+  "customerName": "",
+  "discountCents": -50,
+  "taxRateBp": 15000,
+  "lineItems": [
+    {
+      "description": "",
+      "quantityMilli": 0,
+      "unitPriceCents": -100
+    }
+  ]
+}

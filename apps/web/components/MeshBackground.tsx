@@ -13,32 +13,32 @@ export function MeshBackground() {
       aria-hidden="true"
       className="fixed inset-0 -z-10 overflow-hidden pointer-events-none select-none"
     >
-      {/* Cool base layer */}
-      <div className="absolute inset-0 bg-[#f4f6fa]" />
+      {/* Cool luminous base layer */}
+      <div className="absolute inset-0 bg-[#f8fafc]" />
 
-      {/* Blob 1: Soft Indigo / Blue */}
+      {/* Blob 1: Luminous Electric Azure / Indigo */}
       <div
-        className="absolute -top-[15%] -left-[10%] w-[55vw] h-[55vw] max-w-[850px] max-h-[850px] 
-                   rounded-full bg-gradient-to-br from-blue-400/25 to-indigo-500/20 
-                   blur-[100px] animate-drift-1 transform-gpu"
+        className="absolute -top-[10%] -left-[5%] w-[50vw] h-[50vw] max-w-[750px] max-h-[750px] 
+                   rounded-full bg-gradient-to-br from-blue-400/20 via-indigo-400/15 to-transparent 
+                   blur-[120px] animate-drift-1 transform-gpu"
       />
 
-      {/* Blob 2: Vibrant Teal / Cyan */}
+      {/* Blob 2: Vibrant Cyan / Emerald Frost */}
       <div
-        className="absolute top-[35%] -right-[15%] w-[50vw] h-[50vw] max-w-[800px] max-h-[800px] 
-                   rounded-full bg-gradient-to-bl from-teal-300/25 to-cyan-500/20 
-                   blur-[110px] animate-drift-2 transform-gpu"
+        className="absolute top-[25%] -right-[10%] w-[45vw] h-[45vw] max-w-[700px] max-h-[700px] 
+                   rounded-full bg-gradient-to-bl from-cyan-300/20 via-teal-300/15 to-transparent 
+                   blur-[130px] animate-drift-2 transform-gpu"
       />
 
-      {/* Blob 3: Warm Peach / Amber accent */}
+      {/* Blob 3: Warm Apricot / Rose Light */}
       <div
-        className="absolute -bottom-[20%] left-[20%] w-[60vw] h-[50vw] max-w-[900px] max-h-[750px] 
-                   rounded-full bg-gradient-to-tr from-amber-200/25 to-rose-300/20 
-                   blur-[120px] animate-drift-3 transform-gpu"
+        className="absolute -bottom-[15%] left-[25%] w-[55vw] h-[45vw] max-w-[800px] max-h-[650px] 
+                   rounded-full bg-gradient-to-tr from-amber-200/20 via-rose-200/15 to-transparent 
+                   blur-[140px] animate-drift-3 transform-gpu"
       />
 
-      {/* Subtle fine noise overlay to soften banding and give organic depth */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_transparent_50%,_rgba(244,246,250,0.4)_100%)]" />
+      {/* Top ambient light bloom */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-10%,_rgba(59,130,246,0.12),_transparent_70%)]" />
     </div>
   );
 }

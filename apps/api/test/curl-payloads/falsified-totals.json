@@ -1,0 +1,18 @@
+{
+  "number": "INV-CURL-FAKE",
+  "issueDate": "2026-10-20",
+  "dueDate": "2026-11-20",
+  "businessName": "Falsified Totals Test Inc",
+  "customerName": "Test Customer",
+  "discountCents": 1000,
+  "taxRateBp": 1000,
+  "subtotalCents": 100,
+  "totalCents": 100,
+  "lineItems": [
+    {
+      "description": "Consulting Services",
+      "quantityMilli": 2000,
+      "unitPriceCents": 5000
+    }
+  ]
+}

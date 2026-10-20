@@ -1,0 +1,21 @@
+{
+  "number": "INV-CURL-002",
+  "issueDate": "2026-10-20",
+  "dueDate": "2026-11-25",
+  "businessName": "Curl Studio LLC Updated",
+  "customerName": "Curl Client Inc",
+  "discountCents": 500,
+  "taxRateBp": 825,
+  "lineItems": [
+    {
+      "description": "Updated Service Row 1",
+      "quantityMilli": 3000,
+      "unitPriceCents": 1999
+    },
+    {
+      "description": "Updated Service Row 2",
+      "quantityMilli": 1500,
+      "unitPriceCents": 33
+    }
+  ]
+}

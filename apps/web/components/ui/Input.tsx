@@ -66,12 +66,12 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               'bg-white/80 backdrop-blur-md border border-white/90',
               'shadow-[inset_0_1px_2px_rgba(0,0,0,0.03),0_2px_8px_rgba(31,38,80,0.04)]',
               'transition-all duration-150',
-              'focus:bg-white focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:shadow-[0_0_0_2px_#ffffff,0_0_0_4px_#2563eb,0_0_12px_rgba(37,99,235,0.25)]',
+              'focus:bg-white focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-500/15 focus:shadow-[0_2px_12px_rgba(37,99,235,0.08)]',
               'disabled:bg-slate-100/60 disabled:text-slate-400 disabled:cursor-not-allowed',
               startAdornment && 'pl-9',
               endAdornment && 'pr-9',
               error &&
-                'border-red-400 bg-red-50/40 text-red-950 focus:border-red-500 focus:ring-red-400/20 focus:shadow-[0_0_0_2px_#ffffff,0_0_0_4px_#dc2626,0_0_12px_rgba(220,38,38,0.2)]',
+                'border-red-400 bg-red-50/40 text-red-950 focus:border-red-600 focus:ring-4 focus:ring-red-500/15 focus:shadow-[0_2px_12px_rgba(220,38,38,0.08)]',
               className,
             )}
             {...props}
