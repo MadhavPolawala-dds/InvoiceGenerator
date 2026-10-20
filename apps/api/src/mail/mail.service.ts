@@ -123,8 +123,8 @@ export class MailService {
           status: 'FAILED',
           error: 'Email provider error during delivery',
         },
-      }).catch((logErr) => {
-        this.logger.error(`Failed to record email failure log: ${logErr.message}`);
+      }).catch((logErr: any) => {
+        this.logger.error(`Failed to record email failure log: ${logErr?.message || logErr}`);
       });
 
       throw new BadGatewayException(

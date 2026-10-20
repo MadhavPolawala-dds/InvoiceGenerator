@@ -5,8 +5,8 @@ services:
     runtime: node
     plan: free
     region: oregon
-    buildCommand: npm install && npm run build -w packages/invoice-core && npm run build -w apps/api && npx prisma migrate deploy --schema=apps/api/prisma/schema.prisma
-    startCommand: npm run start:prod --workspace=@invoice/api
+    buildCommand: npm install && npm run build -w packages/invoice-core && npx prisma generate --schema=apps/api/prisma/schema.prisma && npm run build -w apps/api
+    startCommand: npx prisma migrate deploy --schema=apps/api/prisma/schema.prisma && npm run start:prod --workspace=@invoice/api
     envVars:
       - key: DATABASE_URL
         fromDatabase:

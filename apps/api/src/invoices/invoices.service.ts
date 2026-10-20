@@ -170,7 +170,7 @@ export class InvoicesService {
     }
 
     // 5. Replace line items inside a single Prisma transaction
-    return this.prisma.$transaction(async (tx) => {
+    return this.prisma.$transaction(async (tx: any) => {
       // Delete existing line items
       await tx.lineItem.deleteMany({
         where: { invoiceId: id },

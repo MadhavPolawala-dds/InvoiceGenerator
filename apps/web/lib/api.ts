@@ -4,7 +4,10 @@
  */
 
 const rawApiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api';
-const cleanUrl = rawApiUrl.replace(/\/+$/, '');
+let cleanUrl = rawApiUrl.replace(/\/+$/, '');
+if (!cleanUrl.startsWith('http://') && !cleanUrl.startsWith('https://')) {
+  cleanUrl = `https://${cleanUrl}`;
+}
 const API_BASE_URL = cleanUrl.endsWith('/api') ? cleanUrl : `${cleanUrl}/api`;
 
 export interface ApiLineItem {
