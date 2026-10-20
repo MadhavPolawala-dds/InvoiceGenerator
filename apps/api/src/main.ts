@@ -22,18 +22,26 @@ async function bootstrap() {
   // Global exception filter for consistent error shape
   app.useGlobalFilters(new HttpExceptionFilter());
 
-  // CORS configuration (supports comma-separated origins and strips trailing slashes)
+  // CORS configuration (supports comma-separated origins, onrender.com domains, and strips trailing slashes)
   const rawOrigin = process.env.WEB_ORIGIN || 'http://localhost:3000';
   const allowedOrigins = rawOrigin.split(',').map((o) => o.trim().replace(/\/$/, ''));
   app.enableCors({
     origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes('*') || allowedOrigins.includes(origin.replace(/\/$/, ''))) {
+      // Allow requests with no origin (curl, server-to-server) or matching origins
+      if (
+        !origin ||
+        allowedOrigins.includes('*') ||
+        allowedOrigins.some((o) => origin === o || origin.replace(/^https?:\/\//, '') === o.replace(/^https?:\/\//, '')) ||
+        origin.endsWith('.onrender.com') ||
+        origin.includes('localhost')
+      ) {
         callback(null, true);
       } else {
         callback(null, true);
       }
     },
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin', 'X-Requested-With'],
     credentials: true,
   });
 

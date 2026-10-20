@@ -50,8 +50,9 @@ export class HttpExceptionFilter implements ExceptionFilter {
       }
     }
 
-    // Never leak secrets or internal database connection strings
+    // Never leak secrets or internal database connection strings to the client, but log them for debugging
     if (status === HttpStatus.INTERNAL_SERVER_ERROR) {
+      console.error('Unhandled internal server error:', exception);
       message = 'Internal server error';
       errors = undefined;
     }
