@@ -436,6 +436,22 @@ export default function InvoicesListPage() {
                         </Button>
                       </Link>
 
+                      <Link
+                        href={`/receipt/${inv.id}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        title={`Open receipt for invoice #${inv.number}`}
+                      >
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          aria-label={`Open receipt for invoice #${inv.number}`}
+                          className="text-slate-400 hover:text-blue-600 hover:bg-blue-50/70"
+                        >
+                          <Receipt className="w-4 h-4" />
+                        </Button>
+                      </Link>
+
                       <Button
                         variant="pill-primary"
                         size="sm"

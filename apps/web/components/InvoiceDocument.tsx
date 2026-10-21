@@ -83,17 +83,17 @@ export function InvoiceDocument({
   return (
     <article
       aria-label={`Invoice Document ${number || 'Draft'}`}
-      className={`invoice-document bg-white text-slate-900 rounded-[24px] p-6 sm:p-10 shadow-[0_20px_50px_-15px_rgba(15,23,42,0.10),0_0_1px_1px_rgba(0,0,0,0.04)] border border-slate-200/90 max-w-3xl mx-auto relative ${className}`}
+      className={`invoice-document bg-white text-slate-900 p-6 sm:p-10 shadow-[0_20px_50px_-15px_rgba(15,23,42,0.10),0_0_1px_1px_rgba(0,0,0,0.04)] border border-slate-200/90 max-w-3xl mx-auto relative ${className}`}
     >
       {/* Top Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start gap-6 pb-6 border-b border-slate-100">
         <div className="space-y-3">
-          <div className="flex items-center gap-3">
-            <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-slate-900 to-slate-800 text-white flex items-center justify-center font-bold text-lg shadow-[0_4px_12px_rgba(15,23,42,0.15)] ring-1 ring-white/20">
+          <div className="flex items-center gap-3 pb-4">
+            <div className="invoice-logo-tile w-11 h-11 rounded-2xl bg-gradient-to-tr from-slate-900 to-slate-800 text-white flex items-center justify-center font-bold text-lg shadow-[0_4px_12px_rgba(15,23,42,0.15)] ring-1 ring-white/20">
               <Building2 className="w-5 h-5 text-blue-400" />
             </div>
             <div>
-              <h1 className="font-heading font-extrabold text-2xl tracking-tight text-slate-900 leading-tight">
+              <h1 className="font-heading font-extrabold text-2xl pb-1 tracking-tight text-slate-900 leading-tight">
                 {businessName || 'Business Name'}
               </h1>
               <p className="text-xs font-semibold text-slate-500 tracking-wide uppercase">Official Tax Invoice</p>
@@ -113,11 +113,14 @@ export function InvoiceDocument({
         </div>
 
         <div className="flex flex-col sm:items-end text-left sm:text-right shrink-0">
-          <div className="flex items-center gap-2 mb-1.5">
-            <span className="text-[11px] font-bold text-slate-400 uppercase tracking-widest">INVOICE</span>
-            <Badge variant={status === 'SENT' ? 'sent' : 'draft'} className="px-2.5 py-0.5 text-[11px]">
-              {status === 'SENT' ? 'Delivered' : 'Draft'}
-            </Badge>
+          <div className="flex items-center gap-2 mb-1.5 px-2.5 py-0.5 text-[11px] border-none!">
+            {/* <span className="text-[11px] font-bold text-slate-400 uppercase tracking-widest">INVOICE</span> */}
+            {/* Only delivered invoices carry the status stamp — drafts stay unstamped. */}
+            {status === 'SENT' && (
+                "Delivered"
+              // <Badge variant="sent" className="px-2.5 py-0.5 text-[11px] border-none!">
+              // </Badge>
+            )}
           </div>
 
           <p className="font-mono font-black text-xl sm:text-2xl text-slate-900 tracking-tight whitespace-nowrap">
@@ -125,11 +128,11 @@ export function InvoiceDocument({
           </p>
 
           <div className="mt-3.5 flex flex-col gap-1 text-xs">
-            <div className="inline-flex items-center sm:justify-end gap-2 bg-slate-50 px-2.5 py-1 rounded-pill border border-slate-200/60">
+            <div className="inline-flex items-center sm:justify-end gap-2 bg-slate-50 px-2.5 py-1 rounded-pill">
               <span className="text-slate-400 font-medium">Issued:</span>
               <span className="font-semibold text-slate-800">{issueDate || '—'}</span>
             </div>
-            <div className="inline-flex items-center sm:justify-end gap-2 bg-blue-50/60 px-2.5 py-1 rounded-pill border border-blue-200/50">
+            <div className="inline-flex items-center sm:justify-end gap-2 bg-blue-50/60 px-2.5 py-1 rounded-pill">
               <span className="text-blue-600 font-medium">Due Date:</span>
               <span className="font-bold text-blue-700">{dueDate || '—'}</span>
             </div>
@@ -138,8 +141,8 @@ export function InvoiceDocument({
       </div>
 
       {/* Bill To & Metadata Grid */}
-      <div className="py-6 border-b border-slate-100 grid grid-cols-1 sm:grid-cols-2 gap-6 items-start">
-        <div className="bg-slate-50/70 p-4 rounded-2xl border border-slate-100">
+      <div className="pt-6 grid grid-cols-1 sm:grid-cols-2 gap-6 items-start">
+        <div className="bg-slate-50/70 p-4">
           <div className="flex items-center gap-1.5 text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">
             <User className="w-3.5 h-3.5 text-blue-600" />
             <span>Billed To</span>
@@ -154,13 +157,13 @@ export function InvoiceDocument({
         </div>
 
         {visibleCustomFields.length > 0 && (
-          <div className="bg-slate-50/70 p-4 rounded-2xl border border-slate-100 flex flex-col justify-center">
+          <div className="bg-slate-50/70 p-4 flex flex-col justify-center">
             <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">
               Invoice References
             </span>
             <div className="space-y-1.5 text-xs">
               {visibleCustomFields.map((cf) => (
-                <div key={cf.id} className="flex justify-between items-center gap-2 border-b border-slate-200/50 pb-1 last:border-0 last:pb-0">
+                <div key={cf.id} className="flex justify-between items-center gap-2 pb-1 last:border-0 last:pb-0">
                   <span className="text-slate-500 font-medium">{cf.label}</span>
                   <span className="font-semibold text-slate-900 font-mono">{cf.value || '—'}</span>
                 </div>
@@ -172,33 +175,36 @@ export function InvoiceDocument({
 
       {/* Line Items Table */}
       <div className="py-5 overflow-x-auto">
-        <table className="w-full text-left border-collapse min-w-[500px]">
+        <table className="w-full text-left border-collapse min-w-[500px] border-none!">
           <thead>
-            <tr className="border-b border-slate-200 text-slate-400 bg-slate-50/80 rounded-t-xl">
-              <th scope="col" className="py-3 px-3 text-[11px] font-bold uppercase tracking-wider rounded-l-xl">
+            <tr className="border-b-2 border-slate-300">
+              <th
+                scope="col"
+                className="py-3 pl-3 pr-3 text-[10px] font-bold uppercase tracking-[0.14em] text-slate-500"
+              >
                 Description
               </th>
               <th
                 scope="col"
-                className="py-3 px-3 text-[11px] font-bold uppercase tracking-wider text-center w-20"
+                className="py-3 px-3 text-[10px] font-bold uppercase tracking-[0.14em] text-slate-500 text-center w-20"
               >
                 Qty
               </th>
               <th
                 scope="col"
-                className="py-3 px-3 text-[11px] font-bold uppercase tracking-wider text-right w-28"
+                className="py-3 px-3 text-[10px] font-bold uppercase tracking-[0.14em] text-slate-500 text-right w-28"
               >
                 Rate
               </th>
               <th
                 scope="col"
-                className="py-3 px-3 text-[11px] font-bold uppercase tracking-wider text-right w-28 rounded-r-xl"
+                className="py-3 px-3 text-[10px] font-bold uppercase tracking-[0.14em] text-slate-500 text-right w-28"
               >
                 Amount
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100">
+          <tbody className="divide-y divide-slate-100 border-b border-slate-200">
             {lineItems.length === 0 ? (
               <tr>
                 <td colSpan={4} className="py-8 text-center text-sm text-slate-400 italic">
@@ -209,9 +215,12 @@ export function InvoiceDocument({
               lineItems.map((item, index) => {
                 const lineTotal = calculation?.lineTotalsCents[index] ?? 0;
                 return (
-                  <tr key={item.id || index} className="break-inside-avoid hover:bg-slate-50/40 transition-colors">
-                    <td className="py-3.5 px-3 text-sm text-slate-800 font-medium">
-                      {item.description || <span className="text-slate-400 italic">No description</span>}
+                  <tr
+                    key={item.id || index}
+                    className="break-inside-avoid hover:bg-slate-50/60 transition-colors"
+                  >
+                    <td className="py-3.5 pl-3 pr-3 text-sm text-slate-800 font-medium">
+                      {item.description || <span className="text-slate-400 italic">-</span>}
                     </td>
                     <td className="py-3.5 px-3 text-sm text-slate-600 text-center tabular-nums">
                       {milliToQuantity(item.quantityMilli)}
@@ -219,7 +228,7 @@ export function InvoiceDocument({
                     <td className="py-3.5 px-3 text-sm text-slate-600 text-right tabular-nums">
                       {formatCurrency(item.unitPriceCents)}
                     </td>
-                    <td className="py-3.5 px-3 text-sm font-bold text-slate-900 text-right tabular-nums">
+                    <td className="py-3.5 pl-3 pr-3 text-sm font-bold text-slate-900 text-right tabular-nums">
                       {formatCurrency(lineTotal)}
                     </td>
                   </tr>
@@ -231,11 +240,11 @@ export function InvoiceDocument({
       </div>
 
       {/* Totals Summary */}
-      <div className="pt-4 pb-6 border-t border-slate-100 flex flex-col sm:flex-row justify-between items-start gap-6">
+      <div className="pt-4 pb-6 flex flex-col sm:flex-row justify-between items-start gap-6">
         {/* Notes / Terms */}
         <div className="w-full sm:max-w-sm text-xs text-slate-600">
           {notes ? (
-            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/70">
+            <div className="p-4 rounded-2xl bg-slate-50">
               <span className="font-bold text-slate-800 block mb-1">Payment Instructions & Notes:</span>
               <p className="whitespace-pre-line text-slate-600 leading-relaxed">{notes}</p>
             </div>
@@ -274,14 +283,14 @@ export function InvoiceDocument({
           )}
 
           {/* Grand Total Banner */}
-          <div className="mt-3 p-3.5 rounded-2xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white flex justify-between items-baseline shadow-md">
-            <div>
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block leading-none">
+          <div className="mt-4 px-4 py-3.5 border-t bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white flex items-center justify-between gap-4">
+            <div className="min-w-0">
+              <span className="text-[10px] font-bold text-slate-300 uppercase tracking-[0.18em] block leading-none">
                 Total Due
               </span>
-              <span className="text-[11px] text-blue-300 font-medium">USD Currency</span>
+              <span className="text-[11px] text-blue-300 font-medium mt-1 block">USD Currency</span>
             </div>
-            <span className="text-2xl font-black font-heading text-white tabular-nums tracking-tight">
+            <span className="text-3xl font-black font-heading text-white tabular-nums tracking-tight leading-none">
               {formatCurrency(calculation?.totalCents ?? 0)}
             </span>
           </div>

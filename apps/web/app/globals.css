@@ -180,32 +180,97 @@ a:focus-visible {
   }
 }
 
-/* Print Stylesheet: black on white, strip glass, backgrounds, and shadows */
+/* Print Stylesheet: pure black & white, no background colors.
+   Only the .invoice-document sheet is printed; all editor chrome is hidden. */
 @media print {
-  body {
-    background: #ffffff !important;
-    color: #000000 !important;
-  }
-  .no-print,
-  nav,
-  button,
-  .toast,
-  dialog {
-    display: none !important;
-  }
-  .glass,
-  .glass-strong,
-  .glass-pill {
-    background: transparent !important;
-    box-shadow: none !important;
-    border: none !important;
-    backdrop-filter: none !important;
-  }
   @page {
     size: A4;
     margin: 16mm;
   }
-  tr {
+
+  html,
+  body {
+    background: #ffffff !important;
+  }
+
+  /* Hide every piece of app chrome — only the invoice sheet prints */
+  nav,
+  form,
+  button,
+  .no-print,
+  .toast,
+  dialog,
+  [role='dialog'],
+  [role='alertdialog'] {
+    display: none !important;
+  }
+
+  /* Monochrome: remove every background, force black text, no shadows */
+  .invoice-document,
+  .invoice-document * {
+    background: transparent !important;
+    background-image: none !important;
+    color: #000000 !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    /* Recolor existing borders to a uniform print gray.
+       Elements without a border width stay borderless. */
+    border-color: #9ca3af !important;
+  }
+
+  /* Clean paper sheet: no card chrome */
+  .invoice-document {
+    border: none !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    max-width: none !important;
+    width: 100% !important;
+    padding: 0 !important;
+  }
+
+  /* Dark Total Due banner becomes a simple black-outlined box */
+  .invoice-total-banner {
+    border: 1.5px solid #000000 !important;
+    border-radius: 8px !important;
+  }
+
+  /* Logo tile becomes a simple black-outlined square */
+  .invoice-logo-tile {
+    border: 1.5px solid #000000 !important;
+    border-radius: 8px !important;
+  }
+
+  /* Receipt sheet keeps its brand colours (blue badge, amber notes panel) */
+  .receipt-document,
+  .receipt-document * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Receipt sheet prints as a plain page, without the card chrome */
+  .receipt-document {
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+    max-width: none !important;
+    width: 100% !important;
+  }
+
+  /* Multi-page tables: repeat header row, never split a line item */
+  thead {
+    display: table-header-group;
+  }
+  tr,
+  img,
+  .break-inside-avoid {
     break-inside: avoid;
+  }
+
+  /* Keep footer text from being orphaned on its own page */
+  p,
+  li {
+    orphans: 3;
+    widows: 3;
   }
 }

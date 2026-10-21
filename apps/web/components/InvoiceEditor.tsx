@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { useForm, useFieldArray, Controller, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -49,6 +50,7 @@ import {
   Eye,
   EyeOff,
   Sparkles,
+  Receipt,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -562,6 +564,27 @@ export function InvoiceEditor({ initialInvoice }: InvoiceEditorProps) {
               <Printer className="w-3.5 h-3.5 md:mr-1" />
               <span className="hidden md:inline">Print</span>
             </Button>
+
+            {currentInvoice?.id && (
+              <Link
+                href={`/receipt/${currentInvoice.id}`}
+                target="_blank"
+                rel="noreferrer"
+                className="hidden md:inline-flex shrink-0"
+                title="Open the customer receipt page"
+              >
+                <Button
+                  type="button"
+                  variant="secondary"
+                  size="sm"
+                  aria-label="Open receipt page"
+                  className="shrink-0"
+                >
+                  <Receipt className="w-3.5 h-3.5 md:mr-1" />
+                  <span className="hidden md:inline">Receipt</span>
+                </Button>
+              </Link>
+            )}
 
             {currentInvoice?.id && (
               <Button
@@ -1249,12 +1272,12 @@ export function InvoiceEditor({ initialInvoice }: InvoiceEditorProps) {
 
           {/* RIGHT PANE: Sticky Live Preview (Desktop) or Tab View (Mobile) */}
           <div
-            className={`lg:col-span-6 lg:sticky lg:top-24 ${
+            className={`lg:col-span-6 lg:sticky lg:top-24 print:block print:static ${
               activeTab === 'edit' ? 'hidden lg:block' : 'block'
             }`}
           >
             <div className="space-y-3">
-              <div className="glass-pill px-4 py-2 flex items-center justify-between text-xs border border-white/90 shadow-sm">
+              <div className="glass-pill px-4 py-2 flex items-center justify-between text-xs border border-white/90 shadow-sm print:hidden">
                 <span className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
                   <span className="font-bold text-slate-800">Live Paper Sheet</span>

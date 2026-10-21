@@ -11,7 +11,7 @@ export function MeshBackground() {
   return (
     <div
       aria-hidden="true"
-      className="fixed inset-0 -z-10 overflow-hidden pointer-events-none select-none"
+      className="fixed inset-0 -z-10 overflow-hidden pointer-events-none select-none print:hidden"
     >
       {/* Cool luminous base layer */}
       <div className="absolute inset-0 bg-[#f8fafc]" />
